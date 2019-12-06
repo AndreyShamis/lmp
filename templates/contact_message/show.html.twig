@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ContactMessage{% endblock %}
+
+{% block body %}
+    <h1>ContactMessage</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contact_message.id }}</td>
+            </tr>
+            <tr>
+                <th>FromName</th>
+                <td>{{ contact_message.fromName }}</td>
+            </tr>
+            <tr>
+                <th>FromPhoneNumber</th>
+                <td>{{ contact_message.fromPhoneNumber }}</td>
+            </tr>
+            <tr>
+                <th>FromEmail</th>
+                <td>{{ contact_message.fromEmail }}</td>
+            </tr>
+            <tr>
+                <th>Message</th>
+                <td>{{ contact_message.message }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ contact_message.createdAt ? contact_message.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ contact_message.updatedAt ? contact_message.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FromIp</th>
+                <td>{{ contact_message.fromIp }}</td>
+            </tr>
+            <tr>
+                <th>Label</th>
+                <td>{{ contact_message.label }}</td>
+            </tr>
+            <tr>
+                <th>KeepedBy</th>
+                <td>{{ contact_message.keepedBy }}</td>
+            </tr>
+            <tr>
+                <th>Closed</th>
+                <td>{{ contact_message.closed ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('contact_message_index') }}">back to list</a>
+
+    <a href="{{ path('contact_message_edit', {'id': contact_message.id}) }}">edit</a>
+
+    {{ include('contact_message/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ContactMessage index{% endblock %}
+
+{% block body %}
+    <h1>ContactMessage index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>FromName</th>
+                <th>FromPhoneNumber</th>
+                <th>FromEmail</th>
+                <th>Message</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>FromIp</th>
+                <th>Label</th>
+                <th>KeepedBy</th>
+                <th>Closed</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contact_message in contact_messages %}
+            <tr>
+                <td>{{ contact_message.id }}</td>
+                <td>{{ contact_message.fromName }}</td>
+                <td>{{ contact_message.fromPhoneNumber }}</td>
+                <td>{{ contact_message.fromEmail }}</td>
+                <td>{{ contact_message.message }}</td>
+                <td>{{ contact_message.createdAt ? contact_message.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ contact_message.updatedAt ? contact_message.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ contact_message.fromIp }}</td>
+                <td>{{ contact_message.label }}</td>
+                <td>{{ contact_message.keepedBy }}</td>
+                <td>{{ contact_message.closed ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('contact_message_show', {'id': contact_message.id}) }}">show</a>
+                    <a href="{{ path('contact_message_edit', {'id': contact_message.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('contact_message_new') }}">Create new</a>
+{% endblock %}
