@@ -203,22 +203,22 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 ">
-                <form class="main_form ">
+                <form id="contactForm" class="main_form " method="post" action="{{ path('new_from_main_page') }}">
                     <div class="row">
                         <div class="col-md-12 ">
-                            <input class="form_contril" placeholder="Name " type="text" name="Name " />
+                            <input class="form_contril" placeholder="Name " type="text" name="fromName" />
                         </div>
                         <div class="col-md-12">
-                            <input class="form_contril" placeholder="Phone Number" type="text" name=" Phone Number" />
+                            <input class="form_contril" placeholder="Phone Number" type="text" name="fromPhoneNumber" />
                         </div>
                         <div class="col-md-12">
-                            <input class="form_contril" placeholder="Email" type="text" name="Email" />
+                            <input class="form_contril" placeholder="Email" type="text" name="fromEmail" />
                         </div>
                         <div class="col-md-12">
-                            <textarea class="textarea" placeholder="Message" type="text" name="Message"></textarea>
+                            <textarea class="textarea" placeholder="Message" type="text" name="message"></textarea>
                         </div>
                         <div class="col-sm-12">
-                            <button class="send_btn">Send</button>
+                            <button class="send_btn" id="sendContactForm">Send</button>
                         </div>
                     </div>
                 </form>
@@ -271,5 +271,14 @@
 <script src="{{ asset('main/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
 <script src="{{ asset('main/js/custom.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#sendContactForm").click(function () {
+            $('#contactForm').submit();
+        });
+
+    });
+</script>
 </body>
 </html>
