@@ -99,7 +99,7 @@ class ContactMessageController extends AbstractController
 
             $_time = new \DateTime();
             $message = (new \Swift_Message('New message from ['.$contactMessage->getFromName().'] at ' . $_time->format('Y-m-d H:i:s')))
-                ->setFrom('hicam.golda@gmail.com', 'L.M.Pitronot [New message from '. $contactMessage->getFromName() . ']')
+                ->setFrom('hicam.golda@gmail.com', 'L.M.Pitronot messenger')
                 ->setTo(['lolnik@gmail.com', 'milena.mihlev@gmail.com' => 'Milena', 'krolleon@gmail.com' => 'Leonid'])
                 ->setBody(
                     $this->renderView(
