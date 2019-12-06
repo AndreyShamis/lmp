@@ -40,7 +40,7 @@
 <!-- header -->
 <header>
     <!-- header inner -->
-    <div  class="head_top">
+    <div id="home" class="head_top">
         <div class="header">
             <div class="container-fluid">
                 <div class="row">
@@ -60,15 +60,9 @@
                             </button>
                             <div class="collapse navbar-collapse" id="navbarsExample04">
                                 <ul class="navbar-nav mr-auto">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"> Home  </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">About</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Contact</a>
-                                    </li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ path('public_main_page') }}"></a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                                 </ul>
                             </div>
                         </nav>
@@ -234,7 +228,7 @@
 </div>
 <!-- end contact -->
 <!--  footer -->
-<footer>
+<footer id="about">
     <div class="footer">
         <div class="container">
             <div class="row">
