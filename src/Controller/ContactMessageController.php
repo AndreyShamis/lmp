@@ -91,26 +91,31 @@ class ContactMessageController extends AbstractController
         $contactMessage->setFromPhoneNumber($data['fromPhoneNumber']);
         $contactMessage->setFromEmail($data['fromEmail']);
         $contactMessage->setMessage($data['message']);
+        if (strlen($contactMessage->getFromName()) < 3) {
+            return $this->redirectToRoute('public_main_page');
+        }
+        try {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($contactMessage);
+            $entityManager->flush();
+        } catch (\Throwable $ex) {
+            $logger->critical($ex->getMessage());
+        }
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($contactMessage);
-        $entityManager->flush();
-        try{
-
+        try {
             $_time = new \DateTime();
-            $message = (new \Swift_Message('New message from ['.$contactMessage->getFromName().'] at ' . $_time->format('Y-m-d H:i:s')))
+            $subj = 'New message from ['.$contactMessage->getFromName().'] at ' . $_time->format('Y-m-d H:i:s');
+            $message = (new \Swift_Message($subj))
                 ->setFrom('hicam.golda@gmail.com', 'L.M.Pitronot messenger')
                 ->setTo(['lolnik@gmail.com', 'milena.mihlev@gmail.com' => 'Milena', 'krolleon@gmail.com' => 'Leonid'])
                 ->setBody(
                     $this->renderView(
-                        'contact_message/email.html.twig',
-                        [
-                            'contactMessage' => $contactMessage
-                        ]
+                        'contact_message/email.html.twig', ['contactMessage' => $contactMessage]
                     ),
                     'text/html'
                 );
             $res = $mailer->send($message);
+            $logger->alert('Sent ' . $subj . ' res:'. $res);
         } catch (\Throwable $ex) {
             $logger->critical($ex->getMessage());
         }
