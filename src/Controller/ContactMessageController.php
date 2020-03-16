@@ -94,6 +94,10 @@ class ContactMessageController extends AbstractController
         if (strlen($contactMessage->getFromName()) < 3) {
             return $this->redirectToRoute('public_main_page');
         }
+        $phl = strlen($contactMessage->getFromPhoneNumber());
+        if ($phl< 8 || $phl > 20) {
+            return $this->redirectToRoute('public_main_page');
+        }
         try {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($contactMessage);
@@ -107,15 +111,17 @@ class ContactMessageController extends AbstractController
             $subj = 'New message from ['.$contactMessage->getFromName().'] at ' . $_time->format('Y-m-d H:i:s');
             $message = (new \Swift_Message($subj))
                 ->setFrom('hicam.golda@gmail.com', 'L.M.Pitronot messenger')
-                ->setTo(['lolnik@gmail.com', 'milena.mihlev@gmail.com' => 'Milena', 'krolleon@gmail.com' => 'Leonid'])
                 ->setBody(
                     $this->renderView(
                         'contact_message/email.html.twig', ['contactMessage' => $contactMessage]
                     ),
                     'text/html'
                 );
-            $res = $mailer->send($message);
-            $logger->alert('Sent ' . $subj . ' res:'. $res);
+            $message->setTo(['milena.mihlev@gmail.com', 'lolnik@gmail.com', 'krolleon@gmail.com', 'jobs@lmpitronot.com', 'solutionltd777@gmail.com']);
+            $failedRecipients = [];
+
+            $res = $mailer->send($message,$failedRecipients);
+            $logger->alert('Sent ' . $subj . ' res:'. $res . ' To ' . print_r($message->getTo(), true) . ' $failedRecipients ' . print_r($failedRecipients, true));
         } catch (\Throwable $ex) {
             $logger->critical($ex->getMessage());
         }
